@@ -9,7 +9,7 @@ Adversarial planning. Two planners draft solutions from genuinely opposing world
 The method runs in three rounds across five roles:
 
 1. **Independent plans** — two planners explore the codebase and produce structured plans from their assigned personas.
-2. **Cross-review** — each reviewer stress-tests the *other* planner's plan, grounding every point in real files and patterns.
+2. **Cross-review** — each reviewer stress-tests the _other_ planner's plan, grounding every point in real files and patterns.
 3. **Synthesis** — one synthesizer combines the best of both, resolves the critiques, and flags any disagreement the evidence can't settle as a live choice for the user.
 
 Trigger it with phrases like "dual plan", "debate plan", "adversarial plan", "argue the approach", or `/dual-plan` — or just ask for a thorough, stress-tested plan on a decision with real trade-offs.
@@ -34,8 +34,4 @@ Trigger it with phrases like "visual plan", "make the plan visual", "html plan",
 
 ```bash
 npx skills add timursaurus/skills
-```
-
-```bash
-npx skills add https://github.com/timursaurus/skills --skill dual-plan
 ```
