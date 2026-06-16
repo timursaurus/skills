@@ -1,6 +1,6 @@
 ---
 name: visual-plan
-description: Render an implementation or architecture plan as a single self-contained HTML page the user opens in a browser — diagrams, file-change tables, phase timelines, and UI mockups instead of a wall of text. Use when a plan benefits from being seen rather than read: frontend/UI work, system architecture worth diagramming, multi-phase efforts, or any plan that will be shared, reviewed, or revisited. Trigger on "visual plan", "/visual-plan", "make the plan visual", "html plan", "render the plan as a page", "visualize the plan", "show me the plan as a webpage". Gate hard — it's the most expensive plan form, so skip it for trivial or throwaway changes where a plain text plan is cheaper and just as clear.
+description: Render an implementation or architecture plan as a single self-contained HTML page the user opens in a browser — diagrams, file-change tables, phase timelines, and UI mockups instead of a wall of text. Use when a plan benefits from being seen rather than read — frontend / UI work, system architecture worth diagramming, multi-phase efforts, or any plan that will be shared, reviewed, or revisited. Trigger on "visual plan", "/visual-plan", "make the plan visual", "html plan", "render the plan as a page", "visualize the plan", "show me the plan as a webpage". Gate hard — it's the most expensive plan form, so skip it for trivial or throwaway changes where a plain text plan is cheaper and just as clear.
 ---
 
 # Visual Plan
