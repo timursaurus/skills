@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visual Plan — TITLE</title>
+
+<!--
+  Self-contained visual-plan scaffold. No build step, no dependencies.
+  Open directly in a browser (file://). Everything below is offline by default.
+
+  HOW TO USE
+  1. Replace the sample content inside each <!-- BLOCK: name --> marker.
+  2. Delete any block you don't need — they're independent.
+  3. The block catalog (references/blocks.md) holds copy-paste snippets that
+     reuse these same CSS classes. Keep class names in sync.
+
+  OPTIONAL — Mermaid diagrams (needs internet to RENDER; source stays readable
+  offline). Uncomment the two lines at the very bottom of <body> to enable.
+-->
+
+<style>
+  :root {
+    --bg:        #f6f7f9;
+    --surface:   #ffffff;
+    --surface-2: #f0f2f5;
+    --text:      #1c2330;
+    --muted:     #5b6675;
+    --border:    #e2e6ec;
+    --accent:    #2f6fed;
+    --accent-sft:#e8f0fe;
+    --ok:        #1a8f5a;  --ok-sft:  #e3f5ec;
+    --warn:      #b9770a;  --warn-sft:#fdf1dd;
+    --risk:      #d23f3f;  --risk-sft:#fce9e9;
+    --ask:       #7a52d6;  --ask-sft: #f0eafb;
+    --radius:    10px;
+    --maxw:      880px;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #0f1419;
+      --surface:   #171d26;
+      --surface-2: #1e2630;
+      --text:      #e6eaf0;
+      --muted:     #9aa6b5;
+      --border:    #2a323d;
+      --accent:    #6ea0ff;  --accent-sft:#1a2535;
+      --ok:        #4cc38a;  --ok-sft:  #14271e;
+      --warn:      #e0a93a;  --warn-sft:#2a2113;
+      --risk:      #f07171;  --risk-sft:#2c1818;
+      --ask:       #b095f0;  --ask-sft: #221b30;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 40px 24px 96px; }
+  a { color: var(--accent); }
+
+  /* ---- header / meta ---- */
+  .vp-header { margin-bottom: 32px; }
+  .vp-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+  .vp-title { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 10px; }
+  .vp-summary { font-size: 18px; color: var(--muted); margin: 0 0 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; padding: 4px 11px;
+    border-radius: 999px; background: var(--surface-2);
+    color: var(--muted); border: 1px solid var(--border);
+  }
+  .chip--info { background: var(--accent-sft); color: var(--accent); border-color: transparent; }
+  .chip--ok   { background: var(--ok-sft);     color: var(--ok);     border-color: transparent; }
+  .chip--warn { background: var(--warn-sft);   color: var(--warn);   border-color: transparent; }
+
+  /* ---- sections ---- */
+  .vp-section { margin: 36px 0 0; }
+  .vp-section > h2 {
+    font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  p { margin: 0 0 12px; }
+
+  /* ---- callouts ---- */
+  .callout {
+    border: 1px solid var(--border); border-left-width: 4px;
+    background: var(--surface); border-radius: var(--radius);
+    padding: 14px 16px; margin: 0 0 16px;
+  }
+  .callout__label { font-weight: 700; font-size: 13px; letter-spacing: .03em; text-transform: uppercase; margin: 0 0 6px; }
+  .callout > :last-child { margin-bottom: 0; }
+  .callout--summary  { border-left-color: var(--accent); background: var(--accent-sft); }
+  .callout--summary  .callout__label { color: var(--accent); }
+  .callout--risk     { border-left-color: var(--risk);   background: var(--risk-sft); }
+  .callout--risk     .callout__label { color: var(--risk); }
+  .callout--question { border-left-color: var(--ask);    background: var(--ask-sft); }
+  .callout--question .callout__label { color: var(--ask); }
+  .callout ul { margin: 0; padding-left: 20px; }
+  .callout li { margin: 4px 0; }
+
+  /* ---- tables ---- */
+  .vp-table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 0 0 8px; }
+  .vp-table th, .vp-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .vp-table th { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .vp-table tr:last-child td { border-bottom: none; }
+  .vp-table code { font-family: var(--mono); font-size: 13px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; }
+  .tag--add  { background: var(--ok-sft);   color: var(--ok); }
+  .tag--edit { background: var(--warn-sft); color: var(--warn); }
+  .tag--del  { background: var(--risk-sft); color: var(--risk); }
+
+  /* ---- phase timeline ---- */
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .phase { position: relative; padding: 0 0 22px 44px; }
+  .phase::before { /* vertical rule */
+    content: ""; position: absolute; left: 15px; top: 4px; bottom: -4px; width: 2px; background: var(--border);
+  }
+  .phase:last-child::before { display: none; }
+  .phase__num {
+    position: absolute; left: 0; top: 0; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px;
+  }
+  .phase__title { font-weight: 700; margin: 4px 0 6px; }
+  .phase__body ul { margin: 0; padding-left: 18px; }
+  .phase__body li { margin: 3px 0; }
+
+  /* ---- code ---- */
+  .code {
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.55;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 16px; margin: 0 0 16px; overflow-x: auto; white-space: pre;
+  }
+
+  /* ---- diagram (offline boxes-and-arrows) ---- */
+  .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 16px; margin: 0 0 16px; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .node {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 16px; font-weight: 600; font-size: 14px; text-align: center; min-width: 92px;
+  }
+  .node--accent { background: var(--accent-sft); border-color: var(--accent); color: var(--accent); }
+  .arrow { color: var(--muted); font-size: 20px; line-height: 1; user-select: none; }
+  .mermaid { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin: 0 0 16px; text-align: center; }
+
+  /* ---- UI mockup frame + wireframe primitives ---- */
+  .mockup { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 0 0 16px; background: var(--surface); }
+  .mockup__bar { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .mockup__dots { display: flex; gap: 6px; }
+  .mockup__dot { width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
+  .mockup__title { font-size: 13px; color: var(--muted); }
+  .mockup__body { padding: 20px; }
+  .wf-nav { display: flex; align-items: center; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; font-size: 14px; color: var(--muted); }
+  .wf-nav strong { color: var(--text); }
+  .wf-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 0 0 12px; }
+  .wf-card { flex: 1 1 160px; border: 1px solid var(--border); border-radius: 8px; padding: 14px; background: var(--surface-2); }
+  .wf-input { flex: 1 1 200px; height: 38px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 0 12px; display: flex; align-items: center; color: var(--muted); font-size: 14px; }
+  .wf-btn { display: inline-flex; align-items: center; height: 38px; padding: 0 18px; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 600; font-size: 14px; }
+  .wf-btn--ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .wf-text { height: 10px; border-radius: 4px; background: var(--border); margin: 8px 0; }
+  .wf-text.w-40 { width: 40%; } .wf-text.w-60 { width: 60%; } .wf-text.w-80 { width: 80%; }
+
+  .vp-footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+
+  /* ---- print ---- */
+  @media print {
+    :root { --bg: #fff; --surface: #fff; --surface-2: #f4f4f4; }
+    body { font-size: 12pt; }
+    .container { max-width: none; padding: 0; }
+    .callout, .diagram, .mockup, .code, .vp-table { break-inside: avoid; }
+    .phase { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- BLOCK: header -->
+  <header class="vp-header">
+    <p class="vp-eyebrow">Visual Plan</p>
+    <h1 class="vp-title">Add passwordless email login</h1>
+    <p class="vp-summary">Replace the password form with magic-link auth, reusing the existing session layer.</p>
+    <ul class="chips">
+      <li class="chip chip--info">Draft</li>
+      <li class="chip">Scope: auth</li>
+      <li class="chip chip--ok">Effort: ~2 days</li>
+      <li class="chip chip--warn">1 open question</li>
+    </ul>
+  </header>
+  <!-- /BLOCK: header -->
+
+  <!-- BLOCK: summary -->
+  <div class="callout callout--summary">
+    <p class="callout__label">Summary</p>
+    <p>Issue a signed, single-use token on email submit, email a link, and exchange the token for a session on click. No password storage, no new tables — tokens are stateless (JWT) and the existing session cookie is unchanged.</p>
+  </div>
+  <!-- /BLOCK: summary -->
+
+  <!-- BLOCK: problem -->
+  <section class="vp-section">
+    <h2>Problem</h2>
+    <p>Password reset accounts for ~30% of support tickets and the bcrypt path is the slowest route in the app. Users already verify email at signup, so the password adds friction without adding much security.</p>
+  </section>
+  <!-- /BLOCK: problem -->
+
+  <!-- BLOCK: approach -->
+  <section class="vp-section">
+    <h2>Approach</h2>
+    <p>Keep the current <code>/login</code> route and session middleware. Swap the password check for a two-step token flow: request → email link → verify. Tokens are HMAC-signed and carry the email + expiry, so no server-side store is needed.</p>
+  </section>
+  <!-- /BLOCK: approach -->
+
+  <!-- BLOCK: diagram (offline, always renders) -->
+  <section class="vp-section">
+    <h2>Flow</h2>
+    <div class="diagram">
+      <div class="flow">
+        <div class="node">Email form</div>
+        <span class="arrow">&rarr;</span>
+        <div class="node">Sign token</div>
+        <span class="arrow">&rarr;</span>
+        <div class="node">Send email</div>
+        <span class="arrow">&rarr;</span>
+        <div class="node node--accent">Verify &amp; session</div>
+      </div>
+    </div>
+  </section>
+  <!-- /BLOCK: diagram -->
+
+  <!-- BLOCK: decisions -->
+  <section class="vp-section">
+    <h2>Key decisions</h2>
+    <table class="vp-table">
+      <thead><tr><th>Decision</th><th>Choice</th><th>Why</th><th>Alternatives</th></tr></thead>
+      <tbody>
+        <tr><td>Token storage</td><td>Stateless JWT</td><td>No new table; horizontal-scale safe</td><td>DB-backed tokens (revocable)</td></tr>
+        <tr><td>Link lifetime</td><td>15 min</td><td>Balances inbox delay vs. exposure</td><td>5 min, 1 hour</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <!-- /BLOCK: decisions -->
+
+  <!-- BLOCK: file-changes -->
+  <section class="vp-section">
+    <h2>File changes</h2>
+    <table class="vp-table">
+      <thead><tr><th>Path</th><th>Change</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>auth/magic.ts</code></td><td><span class="tag tag--add">add</span></td><td>Sign + verify token helpers</td></tr>
+        <tr><td><code>routes/login.ts</code></td><td><span class="tag tag--edit">edit</span></td><td>Two endpoints: request, verify</td></tr>
+        <tr><td><code>auth/password.ts</code></td><td><span class="tag tag--del">delete</span></td><td>bcrypt path removed</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <!-- /BLOCK: file-changes -->
+
+  <!-- BLOCK: phases -->
+  <section class="vp-section">
+    <h2>Implementation phases</h2>
+    <ol class="timeline">
+      <li class="phase">
+        <span class="phase__num">1</span>
+        <div class="phase__body">
+          <p class="phase__title">Token layer</p>
+          <ul><li>Add <code>auth/magic.ts</code> with sign/verify</li><li>Unit-test expiry + tamper cases</li></ul>
+        </div>
+      </li>
+      <li class="phase">
+        <span class="phase__num">2</span>
+        <div class="phase__body">
+          <p class="phase__title">Routes &amp; email</p>
+          <ul><li>Wire request/verify endpoints</li><li>Send link via existing mailer</li></ul>
+        </div>
+      </li>
+      <li class="phase">
+        <span class="phase__num">3</span>
+        <div class="phase__body">
+          <p class="phase__title">Cutover</p>
+          <ul><li>Remove password path</li><li>Update login UI copy</li></ul>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <!-- /BLOCK: phases -->
+
+  <!-- BLOCK: mockup -->
+  <section class="vp-section">
+    <h2>UI mockup</h2>
+    <div class="mockup">
+      <div class="mockup__bar">
+        <div class="mockup__dots"><span class="mockup__dot"></span><span class="mockup__dot"></span><span class="mockup__dot"></span></div>
+        <span class="mockup__title">app.example.com/login</span>
+      </div>
+      <div class="mockup__body">
+        <div class="wf-nav"><strong>Acme</strong><span>Product</span><span>Pricing</span></div>
+        <div class="wf-text w-40"></div>
+        <div class="wf-row">
+          <div class="wf-input">you@example.com</div>
+          <span class="wf-btn">Send link</span>
+        </div>
+        <div class="wf-text w-60"></div>
+      </div>
+    </div>
+  </section>
+  <!-- /BLOCK: mockup -->
+
+  <!-- BLOCK: risks -->
+  <section class="vp-section">
+    <h2>Risks &amp; trade-offs</h2>
+    <div class="callout callout--risk">
+      <p class="callout__label">Risks</p>
+      <ul>
+        <li><strong>Email deliverability</strong> — a delayed link blocks login entirely. Mitigate with a visible resend + clear "check spam" copy.</li>
+        <li><strong>Stateless tokens can't be revoked</strong> before expiry. Accepted for a 15-min window; revisit if abuse appears.</li>
+      </ul>
+    </div>
+  </section>
+  <!-- /BLOCK: risks -->
+
+  <!-- BLOCK: open-questions -->
+  <section class="vp-section">
+    <h2>Open questions</h2>
+    <div class="callout callout--question">
+      <p class="callout__label">For you to decide</p>
+      <ul>
+        <li>Keep password login as a fallback during rollout, or hard cut over?</li>
+      </ul>
+    </div>
+  </section>
+  <!-- /BLOCK: open-questions -->
+
+  <footer class="vp-footer">Generated visual plan · self-contained · open in any browser.</footer>
+
+</div>
+
+<!--
+  OPTIONAL: enable Mermaid diagrams. Uncomment the two lines below, then use a
+  <pre class="mermaid"> block (see references/blocks.md). Requires internet to
+  render; the diagram source stays human-readable offline.
+-->
+<!-- <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script> -->
+<!-- <script>mermaid.initialize({ startOnLoad: true, theme: matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default' });</script> -->
+</body>
+</html>
