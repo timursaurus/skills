@@ -26,7 +26,7 @@ One self-contained `.html` file with an inline `<style>` block and no required J
 
 ## Producing the plan
 
-1. **Research first.** Explore the codebase and gather context with the same rigor as any good plan. Decide here whether a visual plan is even warranted (see *When to use*); if not, say so and write a text plan instead.
+1. **Research first.** Explore the codebase and gather context with the same rigor as any good plan. Decide here whether a visual plan is even warranted (see _When to use_); if not, say so and write a text plan instead.
 2. **Draft the content.** Settle the substance before touching HTML: problem, approach, key decisions with rationale, file changes, phased steps, risks and trade-offs, and any open questions only the user can resolve.
 3. **Render.** Start from [`references/template.html`](references/template.html) and assemble the page by copying the blocks you need from [`references/blocks.md`](references/blocks.md). Fill each with real content and delete the blocks that don't apply — they're independent.
 4. **Mockups and diagrams.** For UI work, build HTML/CSS wireframes inside a mockup frame. For architecture or flow, use the offline boxes-and-arrows pattern, or a Mermaid block when a richer diagram earns it.
@@ -40,10 +40,6 @@ The catalog in [`references/blocks.md`](references/blocks.md) holds a copy-paste
 ## Diagrams
 
 Default to the offline boxes-and-arrows pattern — pure HTML/CSS that always renders with zero network. Use Mermaid (loaded from a CDN) only when a richer flowchart, sequence, or ER diagram is worth the dependency; enabling it is uncommenting two lines in the template. When you use Mermaid, keep the diagram source readable so the file still communicates if it's opened offline.
-
-## Reusable across agents
-
-The skill needs only three capabilities: read files, write one file, and (optionally) open a browser. There is no MCP server, no account, and no platform lock-in. Where the harness offers native tools — file preview, browser-open, a plan/approval step — prefer them; where it doesn't, fall back to printing the path. The visual plan also composes with other planners: render the synthesis from `dual-plan`, or any text plan, into this format as a final presentation step.
 
 ## Notes
 
