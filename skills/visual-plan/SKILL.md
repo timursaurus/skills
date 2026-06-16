@@ -47,3 +47,4 @@ Default to the offline boxes-and-arrows pattern — pure HTML/CSS that always re
 - Don't pin a model version; run on the strongest reasoning model available, since this exists to present decisions that are expensive to get wrong.
 - Graceful degradation: if a diagram tool or browser-open isn't available, ship the offline version and the path rather than aborting.
 - Substance over polish — a beautiful page can't rescue a plan that hasn't done the thinking.
+- **Ask, don't assume.** Guess as little as possible. When a requirement or decision is genuinely uncertain — anything only the user can settle — ask with AskUserQuestion *before* building the page, not after. A wrong assumption baked into a polished artifact is costly to spot and undo; a quick question is cheap.
